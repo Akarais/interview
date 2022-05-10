@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  web:
+    build: .
+    ports:
+      - "80:8080"
+      
+  mysql:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    env_file:
+      - mysql-config.env
