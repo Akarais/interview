@@ -1,8 +1,13 @@
 package com.example.interview.account;
 
+import com.example.interview.customer.Customer;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 public class Account {
@@ -12,23 +17,31 @@ public class Account {
     @Column(precision = 12, scale = 2)
     private BigDecimal balance;
     private boolean active;
-    @Column(name = "customer_id")
-    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY)
-    private UUID customerId;
+
+    @ManyToMany(mappedBy = "accounts")
+    private Set<Customer> customers = new HashSet<>();
+
     @Enumerated(EnumType.ORDINAL)
     private AccountType type;
 
     protected Account() {}
 
-    public Account(BigDecimal balance, boolean active, UUID customerId, AccountType type) {
+    public Account(BigDecimal balance, boolean active, AccountType type) {
         this.balance = balance;
         this.active = active;
-        this.customerId = customerId;
         this.type = type;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
     }
 
     public BigDecimal getBalance() {
@@ -47,19 +60,17 @@ public class Account {
         this.active = active;
     }
 
-    public UUID getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
-    }
-
     public AccountType getType() {
         return type;
     }
 
     public void setType(AccountType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id;
     }
 }

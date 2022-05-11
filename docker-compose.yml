@@ -16,6 +16,14 @@ services:
     env_file:
       - mysql-config.env
 
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: galkaev
+    ports:
+      - "8080:8080"
+
 volumes:
   mysqldbvolume:
     driver: local

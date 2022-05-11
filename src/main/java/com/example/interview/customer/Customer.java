@@ -1,7 +1,12 @@
 package com.example.interview.customer;
 
+import com.example.interview.account.Account;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 public class Customer {
@@ -11,6 +16,14 @@ public class Customer {
     private String firstName;
     private String lastName;
 
+    @ManyToMany
+    @JoinTable(
+            name = "Customer_Account",
+            joinColumns = { @JoinColumn(name = "customer_id") },
+            inverseJoinColumns = { @JoinColumn(name = "account_id") }
+    )
+    private Set<Account> accounts = new HashSet<>();
+
     protected Customer() {}
 
     public Customer(String firstName, String lastName) {
@@ -18,15 +31,11 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName() {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -34,7 +43,32 @@ public class Customer {
         return lastName;
     }
 
-    public void setLastName() {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account) {
+        this.accounts.add(account);
+        account.getCustomers().add(this);
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", accounts=" + accounts +
+                '}';
+    }
+
+
 }
