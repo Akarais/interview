@@ -134,3 +134,5 @@ mysql
 .idea
 
 *.env
+
+target

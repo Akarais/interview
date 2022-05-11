@@ -10,6 +10,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysqldbvolume:/var/lib/mysql
     env_file:
       - mysql-config.env
+
+volumes:
+  mysqldbvolume:
+    driver: local
