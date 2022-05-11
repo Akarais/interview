@@ -10,7 +10,7 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/")
     public @ResponseBody boolean addNewCustomer(
             @RequestParam String firstName,
             @RequestParam String lastName) {
@@ -19,7 +19,7 @@ public class CustomerController {
         return true;
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/")
     public @ResponseBody Iterable<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
