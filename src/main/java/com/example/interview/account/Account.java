@@ -1,7 +1,5 @@
 package com.example.interview.account;
 
-import com.example.interview.AccountType;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
