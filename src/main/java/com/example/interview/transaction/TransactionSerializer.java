@@ -30,19 +30,13 @@ public class TransactionSerializer extends StdSerializer<Transaction> {
         Set<Customer> temp = value.getFrom().getCustomers();
         temp.addAll(value.getTo().getCustomers());
 
-        temp.forEach(c ->
-            {
-                try {
-                    jgen.writeStartObject();
-                    jgen.writeStringField("id", c.getId().toString());
-                    jgen.writeStringField("firstName", c.getFirstName());
-                    jgen.writeStringField("lastName", c.getLastName());
-                    jgen.writeEndObject();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        );
+        for (Customer c : temp) {
+            jgen.writeStartObject();
+            jgen.writeStringField("id", c.getId().toString());
+            jgen.writeStringField("firstName", c.getFirstName());
+            jgen.writeStringField("lastName", c.getLastName());
+            jgen.writeEndObject();
+        }
 
         jgen.writeEndArray();
         jgen.writeEndObject();
