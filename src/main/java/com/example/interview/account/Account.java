@@ -1,24 +1,27 @@
 package com.example.interview.account;
 
 import com.example.interview.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
     @Column(precision = 12, scale = 2)
     private BigDecimal balance;
     private boolean active;
 
     @ManyToMany(mappedBy = "accounts")
+    @JsonIgnore
     private Set<Customer> customers = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)

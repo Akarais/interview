@@ -1,5 +1,7 @@
 package com.example.interview.transaction;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -7,6 +9,7 @@ import java.util.UUID;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
     @Column(precision = 12, scale = 2)
     private BigDecimal amount;

@@ -1,6 +1,7 @@
 package com.example.interview.customer;
 
 import com.example.interview.account.Account;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
     private String firstName;
     private String lastName;
