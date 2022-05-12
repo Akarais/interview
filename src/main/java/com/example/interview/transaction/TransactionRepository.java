@@ -1,9 +1,14 @@
 package com.example.interview.transaction;
 
-import com.example.interview.customer.Customer;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
-public interface TransactionRepository extends CrudRepository<Customer, UUID> {
+public interface TransactionRepository extends CrudRepository<Transaction, UUID> {
+
+    @Query("FROM Transaction t WHERE t.amount > :amount")
+    List<Transaction> getAllExceedingAmount(BigDecimal amount);
 }

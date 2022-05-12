@@ -1,7 +1,8 @@
 package com.example.interview.account;
 
+import com.example.interview.View;
 import com.example.interview.customer.Customer;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -15,15 +16,19 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "org.hibernate.type.UUIDCharType")
+    @JsonView(View.Public.class)
     private UUID id;
     @Column(precision = 12, scale = 2)
+    @JsonView(View.Public.class)
     private BigDecimal balance;
+    @JsonView(View.Public.class)
     private boolean active;
 
     @ManyToMany(mappedBy = "accounts")
-    @JsonIgnore
+    @JsonView(View.Internal.class)
     private Set<Customer> customers = new HashSet<>();
 
+    @JsonView(View.Public.class)
     @Enumerated(EnumType.ORDINAL)
     private AccountType type;
 

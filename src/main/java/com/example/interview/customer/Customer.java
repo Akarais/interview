@@ -1,6 +1,8 @@
 package com.example.interview.customer;
 
+import com.example.interview.View;
 import com.example.interview.account.Account;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -14,8 +16,11 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "org.hibernate.type.UUIDCharType")
+    @JsonView(View.Public.class)
     private UUID id;
+    @JsonView(View.Public.class)
     private String firstName;
+    @JsonView(View.Public.class)
     private String lastName;
 
     @ManyToMany
@@ -24,6 +29,7 @@ public class Customer {
             joinColumns = { @JoinColumn(name = "customer_id") },
             inverseJoinColumns = { @JoinColumn(name = "account_id") }
     )
+    @JsonView(View.Internal_2.class)
     private Set<Account> accounts = new HashSet<>();
 
     protected Customer() {}

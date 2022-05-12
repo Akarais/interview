@@ -1,26 +1,38 @@
 package com.example.interview.transaction;
 
+import com.example.interview.View;
+import com.example.interview.account.Account;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Entity
+@JsonSerialize(using = TransactionSerializer.class)
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "org.hibernate.type.UUIDCharType")
+    @JsonView(View.Public.class)
     private UUID id;
     @Column(precision = 12, scale = 2)
+    @JsonView(View.Public.class)
     private BigDecimal amount;
-    @OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
-    private UUID from;
-    @OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
-    private UUID to;
+    @ManyToOne
+    @JoinColumn(name = "fk_from_account")
+    @JsonView(View.Public.class)
+    private Account from;
+    @ManyToOne
+    @JoinColumn(name = "fk_to_account")
+    @JsonView(View.Public.class)
+    private Account to;
 
     protected Transaction() {}
 
-    public Transaction(BigDecimal amount, UUID from, UUID to) {
+    public Transaction(BigDecimal amount, Account from, Account to) {
         this.amount = amount;
         this.from = from;
         this.to = to;
@@ -34,19 +46,23 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public UUID getFrom() {
+    public Account getFrom() {
         return from;
     }
 
-    public void setFrom(UUID from) {
+    public void setFrom(Account from) {
         this.from = from;
     }
 
-    public UUID getTo() {
+    public Account getTo() {
         return to;
     }
 
-    public void setTo(UUID to) {
+    public void setTo(Account to) {
         this.to = to;
+    }
+
+    public UUID getId() {
+        return this.id;
     }
 }
