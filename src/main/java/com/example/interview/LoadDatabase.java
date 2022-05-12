@@ -13,10 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Configuration
 class LoadDatabase {
@@ -30,25 +26,35 @@ class LoadDatabase {
         Customer customer4 = new Customer("first 4", "last 4");
 
         Account account1 = new Account(new BigDecimal("100.50"), true, AccountType.CURRENT);
-        Account account2 = new Account(new BigDecimal("200.50"), true, AccountType.SAVINGS);
+        Account account2 = new Account(new BigDecimal("200.50"), false, AccountType.SAVINGS);
         Account account3 = new Account(new BigDecimal("300.50"), true, AccountType.CURRENT);
-        Account account4 = new Account(new BigDecimal("400.50"), true, AccountType.SAVINGS);
-        Account account5 = new Account(new BigDecimal("500.50"), true, AccountType.CURRENT);
-        Account account6 = new Account(new BigDecimal("600.50"), true, AccountType.SAVINGS);
+        Account account4 = new Account(new BigDecimal("400.50"), false, AccountType.SAVINGS);
+        Account account5 = new Account(new BigDecimal("500.50"), false, AccountType.CURRENT);
+        Account account6 = new Account(new BigDecimal("600.50"), false, AccountType.SAVINGS);
 
         customer1.addAccount(account1);
 
-//        customer2.setAccounts(Set.of(account2, account3, account4));
-//        customer3.setAccounts(Set.of(account5));
-//        customer4.setAccounts(Set.of(account6));
+        customer2.addAccount(account2);
+        customer2.addAccount(account3);
+
+        customer3.addAccount(account4);
+        customer3.addAccount(account5);
+
+        customer4.addAccount(account1);
+        customer4.addAccount(account2);
+        customer4.addAccount(account6);
 
         return args -> {
             log.info("Preloading " + repository2.save(account1));
             log.info("Preloading " + repository2.save(account2));
             log.info("Preloading " + repository2.save(account3));
+            log.info("Preloading " + repository2.save(account4));
+            log.info("Preloading " + repository2.save(account5));
+            log.info("Preloading " + repository2.save(account6));
             log.info("Preloading " + repository.save(customer1));
             log.info("Preloading " + repository.save(customer2));
             log.info("Preloading " + repository.save(customer3));
+            log.info("Preloading " + repository.save(customer4));
         };
     }
 }

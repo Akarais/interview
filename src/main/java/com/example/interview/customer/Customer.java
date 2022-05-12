@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+@NamedEntityGraph(name = "graph.Customer.accounts", attributeNodes = @NamedAttributeNode("accounts"))
 @Entity
 public class Customer {
     @Id

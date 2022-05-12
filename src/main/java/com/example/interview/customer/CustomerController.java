@@ -25,7 +25,7 @@ public class CustomerController {
 
     @GetMapping(path="/")
     public @ResponseBody ResponseEntity<List<Customer>> getAllCustomers() {
-        List<Customer> customers = customerRepository.findAllWithAccounts();
+        List<Customer> customers = customerRepository.findAllWithAccountsByActive(false);
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }
